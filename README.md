@@ -1,9 +1,7 @@
-# Gaming-Stocks-Data-analysis-using-ARIMA-family
-
-# Time Series Analysis of Ubisoft Stock Data
+# Time Series Analysis of Ubisoft and Take-Two Interactive Stock Data
 
 ## Introduction
-This report analyzes Ubisoft stock prices using ARIMA and SARIMAX time series models. The analysis includes:
+This report analyzes stock prices for Ubisoft (`UBI.PA`) and Take-Two Interactive (`TTWO`) using ARIMA and SARIMAX time series models. The analysis covers:
 
 1. Data Collection
 2. Stationarity Testing
@@ -14,52 +12,68 @@ This report analyzes Ubisoft stock prices using ARIMA and SARIMAX time series mo
 ---
 
 ## Data Collection
-Data was sourced using Yahoo Finance (`yfinance`), retrieving historical prices for Ubisoft (ticker: `UBI.PA`). The time frame was up to January 12, 2025.
+Historical stock prices were retrieved using Yahoo Finance (`yfinance`) for both companies:
+- Ubisoft (ticker: `UBI.PA`)
+- Take-Two Interactive (ticker: `TTWO`)  
+The time frame extended up to January 12, 2025.
 
 ---
 
 ## Stationarity Testing
 ### Augmented Dickey-Fuller (ADF) Test:
-- Null Hypothesis: Data has a unit root (non-stationary).
-- Result: **p-value < 0.05** indicates the series is stationary after differencing.
+- **Ubisoft**: Stationarity achieved after differencing once (d=1).  
+- **Take-Two Interactive**: Stationarity achieved after differencing once (d=1).  
+
+In both cases, **p-value < 0.05** indicated that the transformed series was stationary.
 
 ---
 
 ## Model Fitting
-### ARIMA Model:
-- **Order Selection**: Automated using `auto_arima`.
-- Final Order: (p=1, d=1, q=1).
+### Ubisoft
+- **ARIMA Model**: Final order (1, 1, 1) selected using `auto_arima`.
+- **SARIMAX Model**: Incorporated seasonality with SARIMAX(1, 1, 1)(1, 0, 1, 12).
 
-### SARIMAX Model:
-- Seasonal component included to address periodic patterns.
-- Final Order: SARIMAX(1, 1, 1)(1, 0, 1, 12).
+### Take-Two Interactive
+- **ARIMA Model**: Final order (2, 1, 2) selected after AIC/BIC optimization.
+- **SARIMAX Model**: Seasonal order SARIMAX(2, 1, 2)(0, 1, 1, 12).
 
 ---
 
 ## Residual Diagnostics
-Residual plots showed:
-- White noise distribution.
-- Autocorrelation within acceptable bounds.
-
-### Ljung-Box Test:
-- Null Hypothesis: Residuals are uncorrelated.
-- Result: Passed (p-value > 0.05).
+Residuals for both Ubisoft and Take-Two Interactive showed:
+- **White Noise**: Residuals were normally distributed.
+- **Uncorrelated Residuals**: Confirmed with the Ljung-Box test (p-value > 0.05).
 
 ---
 
 ## Forecasting
-The model produced a forecast for Ubisoft stock prices over a 30-day horizon. Confidence intervals were included to account for uncertainty.
+### Ubisoft
+- 30-day forecast generated using SARIMAX.
+- **Visualization**: Actual vs Predicted values plotted with confidence intervals for future forecasts.
 
-### Visualization:
-- Actual vs Predicted values plotted.
-- Forecasts extended with shaded confidence regions.
+### Take-Two Interactive
+- 30-day forecast generated using SARIMAX.
+- **Visualization**: Similar methodology applied, showing strong predictive performance for seasonal trends.
 
 ---
 
-## Conclusion
-- **Model Performance**: ARIMA and SARIMAX models effectively captured trends and seasonality.
-- **Limitations**: Forecast accuracy is sensitive to outliers and external market conditions.
-- **Future Work**: Explore hybrid models (e.g., ARIMA + GARCH) for volatility modeling.
+## Comparative Insights
+- **Ubisoft**: Seasonality was a significant factor, with stronger SARIMAX performance.
+- **Take-Two Interactive**: Exhibited higher variability, and ARIMA captured the trends reasonably well.
+
+---
+
+## Limitations
+1. **Ubisoft**: Sensitive to market shocks due to limited stock volume.
+2. **Take-Two Interactive**: Volatility in the gaming sector affects model accuracy.
+3. External factors (e.g., earnings reports) are not incorporated.
+
+---
+
+## Future Work
+1. Explore hybrid models (e.g., ARIMA + GARCH) for volatility modeling.
+2. Incorporate external regressors like economic indicators or market indices.
+3. Extend forecasts to include confidence intervals for long-term projections.
 
 ---
 
