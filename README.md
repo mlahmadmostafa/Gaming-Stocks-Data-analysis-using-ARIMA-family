@@ -8,6 +8,7 @@ This report analyzes stock prices for Ubisoft (`UBI.PA`) and Take-Two Interactiv
 3. Model Fitting and Optimization
 4. Residual Diagnostics
 5. Forecasting
+![image](https://github.com/user-attachments/assets/59e76c3b-3fab-4016-ab7d-a2f6dbdd3e3e)
 
 ---
 
